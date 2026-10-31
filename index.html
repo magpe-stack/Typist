@@ -18,8 +18,10 @@
   <div class="app-shell">
 
     <header class="topbar">
+
       <div class="brand">
         <img src="assets/icons/icon.svg" alt="Typist" class="brand-icon">
+
         <div class="brand-info">
           <span class="brand-name">Typist</span>
           <span class="brand-subtitle">Editor de Texto</span>
@@ -27,41 +29,124 @@
       </div>
 
       <div class="topbar-actions">
+
         <span id="saveStatus" class="save-status">Pronto</span>
 
-        <button id="newDocumentBtn" class="icon-button" title="Novo documento" aria-label="Novo documento">
-          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <div class="file-menu-container">
+
+          <button
+            id="fileMenuBtn"
+            class="file-menu-button"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="fileMenu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+            <span>Arquivo</span>
+            <svg class="menu-chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 10 5 5 5-5"/>
+            </svg>
+          </button>
+
+          <div id="fileMenu" class="file-menu" hidden>
+
+            <button type="button" class="menu-item" data-action="new">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              <span>Novo documento</span>
+              <span class="menu-shortcut">Ctrl+N</span>
+            </button>
+
+            <button type="button" class="menu-item" data-action="import">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 15V3m-5 5 5-5 5 5M4 17v4h16v-4"/>
+              </svg>
+              <span>Importar arquivo</span>
+            </button>
+
+            <div class="menu-separator"></div>
+
+            <div class="menu-section-label">EXPORTAR</div>
+
+            <button type="button" class="menu-item" data-action="export-txt">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3h9l5 5v13H6z"/>
+                <path d="M14 3v6h6M9 14h8M9 17h8"/>
+              </svg>
+              <span>Exportar TXT</span>
+            </button>
+
+            <button type="button" class="menu-item" data-action="export-html">
+              <svg viewBox="0 0 24 24">
+                <path d="m8 8-5 4 5 4m8-8 5 4-5 4m-2-12-4 16"/>
+              </svg>
+              <span>Exportar HTML</span>
+            </button>
+
+            <button type="button" class="menu-item" data-action="export-docx">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3h9l5 5v13H6z"/>
+                <path d="M14 3v6h6"/>
+                <path d="m9 14 2 4 2-4 2 4 2-4"/>
+              </svg>
+              <span>Exportar DOCX (Word)</span>
+            </button>
+
+            <div class="menu-separator"></div>
+
+            <button type="button" class="menu-item" data-action="print">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <path d="M6 14h12v7H6z"/>
+              </svg>
+              <span>Imprimir / Salvar como PDF</span>
+            </button>
+
+          </div>
+        </div>
+
+        <button
+          id="themeBtn"
+          class="icon-button"
+          title="Alternar tema"
+          aria-label="Alternar tema"
+        >
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+          </svg>
         </button>
 
-        <button id="importBtn" class="icon-button" title="Importar arquivo" aria-label="Importar arquivo">
-          <svg viewBox="0 0 24 24"><path d="M12 15V3m-5 5 5-5 5 5M4 17v4h16v-4"/></svg>
-        </button>
-
-        <button id="themeBtn" class="icon-button" title="Alternar tema" aria-label="Alternar tema">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
-        </button>
       </div>
     </header>
 
     <main class="workspace">
 
       <aside class="sidebar">
+
         <div class="sidebar-heading">
           <span>DOCUMENTOS</span>
-          <button id="sidebarNewBtn" class="small-icon-button" title="Novo documento">+</button>
         </div>
 
         <div id="documentList" class="document-list"></div>
 
         <div class="sidebar-footer">
           <div class="storage-label">Armazenamento local</div>
-          <div class="storage-description">Seus documentos ficam neste dispositivo.</div>
+          <div class="storage-description">
+            Seus documentos ficam neste dispositivo.
+          </div>
         </div>
+
       </aside>
 
       <section class="editor-area">
 
         <div class="document-header">
+
           <input
             id="documentTitle"
             class="document-title"
@@ -71,11 +156,6 @@
             aria-label="Título do documento"
           >
 
-          <div class="document-actions">
-            <button id="exportTxtBtn" class="secondary-button">Exportar TXT</button>
-            <button id="exportHtmlBtn" class="secondary-button">Exportar HTML</button>
-            <button id="printBtn" class="primary-button">Imprimir / PDF</button>
-          </div>
         </div>
 
         <div class="toolbar" role="toolbar" aria-label="Formatação do texto">
@@ -144,9 +224,11 @@
           <button id="redoBtn" class="tool-button" title="Refazer (Ctrl+Y)" aria-label="Refazer">↷</button>
 
           <button id="clearFormatBtn" class="tool-button clear-format" title="Limpar formatação" aria-label="Limpar formatação">Tx</button>
+
         </div>
 
         <div class="page-background">
+
           <div
             id="editor"
             class="editor"
@@ -158,9 +240,11 @@
           >
             <p></p>
           </div>
+
         </div>
 
         <footer class="statusbar">
+
           <div class="statistics">
             <span><strong id="wordCount">0</strong> palavras</span>
             <span><strong id="charCount">0</strong> caracteres</span>
@@ -169,6 +253,7 @@
           </div>
 
           <span class="statusbar-right">Português (Brasil)</span>
+
         </footer>
 
       </section>
@@ -185,5 +270,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="assets/js/app.js" defer></script>
+
 </body>
 </html>
