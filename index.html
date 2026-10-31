@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f6f8">
+  <meta name="description" content="Typist — Editor de texto moderno, simples e funcional.">
+
+  <title>Typist — Editor de Texto</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/icons/icon.svg" alt="Typist" class="brand-icon">
+        <div class="brand-info">
+          <span class="brand-name">Typist</span>
+          <span class="brand-subtitle">Editor de Texto</span>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <span id="saveStatus" class="save-status">Pronto</span>
+
+        <button id="newDocumentBtn" class="icon-button" title="Novo documento" aria-label="Novo documento">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+
+        <button id="importBtn" class="icon-button" title="Importar arquivo" aria-label="Importar arquivo">
+          <svg viewBox="0 0 24 24"><path d="M12 15V3m-5 5 5-5 5 5M4 17v4h16v-4"/></svg>
+        </button>
+
+        <button id="themeBtn" class="icon-button" title="Alternar tema" aria-label="Alternar tema">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+
+      <aside class="sidebar">
+        <div class="sidebar-heading">
+          <span>DOCUMENTOS</span>
+          <button id="sidebarNewBtn" class="small-icon-button" title="Novo documento">+</button>
+        </div>
+
+        <div id="documentList" class="document-list"></div>
+
+        <div class="sidebar-footer">
+          <div class="storage-label">Armazenamento local</div>
+          <div class="storage-description">Seus documentos ficam neste dispositivo.</div>
+        </div>
+      </aside>
+
+      <section class="editor-area">
+
+        <div class="document-header">
+          <input
+            id="documentTitle"
+            class="document-title"
+            type="text"
+            value="Documento sem título"
+            maxlength="120"
+            aria-label="Título do documento"
+          >
+
+          <div class="document-actions">
+            <button id="exportTxtBtn" class="secondary-button">Exportar TXT</button>
+            <button id="exportHtmlBtn" class="secondary-button">Exportar HTML</button>
+            <button id="printBtn" class="primary-button">Imprimir / PDF</button>
+          </div>
+        </div>
+
+        <div class="toolbar" role="toolbar" aria-label="Formatação do texto">
+
+          <select id="blockFormat" class="toolbar-select" aria-label="Formato do parágrafo">
+            <option value="P">Parágrafo</option>
+            <option value="H1">Título 1</option>
+            <option value="H2">Título 2</option>
+            <option value="H3">Título 3</option>
+            <option value="BLOCKQUOTE">Citação</option>
+          </select>
+
+          <span class="toolbar-divider"></span>
+
+          <select id="fontFamily" class="toolbar-select font-select" aria-label="Fonte">
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Courier New">Courier New</option>
+          </select>
+
+          <select id="fontSize" class="toolbar-select size-select" aria-label="Tamanho da fonte">
+            <option value="2">12</option>
+            <option value="3" selected>16</option>
+            <option value="4">18</option>
+            <option value="5">24</option>
+            <option value="6">32</option>
+            <option value="7">48</option>
+          </select>
+
+          <span class="toolbar-divider"></span>
+
+          <button class="tool-button" data-command="bold" title="Negrito (Ctrl+B)" aria-label="Negrito"><b>B</b></button>
+          <button class="tool-button" data-command="italic" title="Itálico (Ctrl+I)" aria-label="Itálico"><i>I</i></button>
+          <button class="tool-button" data-command="underline" title="Sublinhado (Ctrl+U)" aria-label="Sublinhado"><u>U</u></button>
+          <button class="tool-button" data-command="strikeThrough" title="Tachado" aria-label="Tachado"><s>S</s></button>
+
+          <span class="toolbar-divider"></span>
+
+          <button class="tool-button" data-command="justifyLeft" title="Alinhar à esquerda" aria-label="Alinhar à esquerda">≡</button>
+          <button class="tool-button" data-command="justifyCenter" title="Centralizar" aria-label="Centralizar">☰</button>
+          <button class="tool-button" data-command="justifyRight" title="Alinhar à direita" aria-label="Alinhar à direita">≡</button>
+          <button class="tool-button" data-command="justifyFull" title="Justificar" aria-label="Justificar">▤</button>
+
+          <span class="toolbar-divider"></span>
+
+          <button class="tool-button" data-command="insertUnorderedList" title="Lista com marcadores" aria-label="Lista com marcadores">•≡</button>
+          <button class="tool-button" data-command="insertOrderedList" title="Lista numerada" aria-label="Lista numerada">1≡</button>
+
+          <span class="toolbar-divider"></span>
+
+          <label class="color-control" title="Cor do texto">
+            <span>A</span>
+            <input type="color" id="textColor" value="#252a34" aria-label="Cor do texto">
+          </label>
+
+          <label class="color-control highlight-control" title="Realce do texto">
+            <span>▰</span>
+            <input type="color" id="highlightColor" value="#fff176" aria-label="Cor de realce">
+          </label>
+
+          <span class="toolbar-divider"></span>
+
+          <button id="undoBtn" class="tool-button" title="Desfazer (Ctrl+Z)" aria-label="Desfazer">↶</button>
+          <button id="redoBtn" class="tool-button" title="Refazer (Ctrl+Y)" aria-label="Refazer">↷</button>
+
+          <button id="clearFormatBtn" class="tool-button clear-format" title="Limpar formatação" aria-label="Limpar formatação">Tx</button>
+        </div>
+
+        <div class="page-background">
+          <div
+            id="editor"
+            class="editor"
+            contenteditable="true"
+            spellcheck="true"
+            role="textbox"
+            aria-label="Área de edição do documento"
+            aria-multiline="true"
+          >
+            <p></p>
+          </div>
+        </div>
+
+        <footer class="statusbar">
+          <div class="statistics">
+            <span><strong id="wordCount">0</strong> palavras</span>
+            <span><strong id="charCount">0</strong> caracteres</span>
+            <span><strong id="paragraphCount">0</strong> parágrafos</span>
+            <span><strong id="lineCount">0</strong> linhas</span>
+          </div>
+
+          <span class="statusbar-right">Português (Brasil)</span>
+        </footer>
+
+      </section>
+    </main>
+  </div>
+
+  <input
+    type="file"
+    id="fileInput"
+    accept=".txt,.html,.htm,text/plain,text/html"
+    hidden
+  >
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
