@@ -12,6 +12,7 @@
   --sidebar-width: 245px;
   --toolbar-height: 54px;
   --shadow: 0 2px 12px rgba(20, 30, 50, 0.06);
+  --menu-shadow: 0 10px 35px rgba(20, 30, 50, 0.14);
 }
 
 * {
@@ -43,6 +44,10 @@ button {
   flex-direction: column;
 }
 
+/* =========================================
+   CABEÇALHO
+========================================= */
+
 .topbar {
   height: 68px;
   padding: 0 26px;
@@ -51,6 +56,8 @@ button {
   justify-content: space-between;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 20;
 }
 
 .brand {
@@ -90,7 +97,7 @@ button {
 .save-status {
   color: var(--text-secondary);
   font-size: 12px;
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 .icon-button,
@@ -124,11 +131,156 @@ button {
   stroke-linejoin: round;
 }
 
+/* =========================================
+   MENU ARQUIVO
+========================================= */
+
+.file-menu-container {
+  position: relative;
+}
+
+.file-menu-button {
+  min-height: 37px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 650;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.file-menu-button:hover,
+.file-menu-button[aria-expanded="true"] {
+  background: var(--surface-secondary);
+  border-color: var(--accent);
+}
+
+.file-menu-button svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.file-menu-button .menu-chevron {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.2s;
+}
+
+.file-menu-button[aria-expanded="true"] .menu-chevron {
+  transform: rotate(180deg);
+}
+
+.file-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 265px;
+  padding: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--menu-shadow);
+  z-index: 100;
+  animation: menuAppear 0.16s ease-out;
+}
+
+.file-menu[hidden] {
+  display: none;
+}
+
+@keyframes menuAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-item {
+  width: 100%;
+  min-height: 39px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font-size: 12px;
+  transition: background 0.15s;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  outline: none;
+  background: var(--surface-secondary);
+  color: var(--accent);
+}
+
+.menu-item svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.menu-item span:nth-of-type(1) {
+  flex: 1;
+}
+
+.menu-shortcut {
+  color: var(--text-secondary);
+  font-size: 10px;
+}
+
+.menu-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 3px;
+}
+
+.menu-section-label {
+  padding: 7px 10px 5px;
+  color: var(--text-secondary);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+
+/* =========================================
+   ÁREA PRINCIPAL
+========================================= */
+
 .workspace {
   display: flex;
   flex: 1;
   min-height: calc(100vh - 68px);
 }
+
+/* =========================================
+   BARRA LATERAL
+========================================= */
 
 .sidebar {
   width: var(--sidebar-width);
@@ -148,12 +300,6 @@ button {
   font-size: 10px;
   font-weight: 750;
   letter-spacing: 1px;
-}
-
-.small-icon-button {
-  width: 26px;
-  height: 26px;
-  font-size: 20px;
 }
 
 .document-list {
@@ -217,6 +363,10 @@ button {
   line-height: 1.5;
 }
 
+/* =========================================
+   EDITOR
+========================================= */
+
 .editor-area {
   flex: 1;
   min-width: 0;
@@ -242,7 +392,7 @@ button {
   color: var(--text);
   font-size: 20px;
   font-weight: 650;
-  width: min(45%, 420px);
+  width: min(100%, 600px);
   min-width: 150px;
 }
 
@@ -250,41 +400,9 @@ button {
   border-bottom: 1px solid var(--accent);
 }
 
-.document-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.secondary-button,
-.primary-button {
-  padding: 9px 13px;
-  border-radius: 7px;
-  font-size: 11px;
-  font-weight: 650;
-  transition: 0.2s;
-}
-
-.secondary-button {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-}
-
-.secondary-button:hover {
-  background: var(--surface-secondary);
-}
-
-.primary-button {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: white;
-}
-
-.primary-button:hover {
-  background: var(--accent-hover);
-}
+/* =========================================
+   BARRA DE FORMATAÇÃO
+========================================= */
 
 .toolbar {
   min-height: var(--toolbar-height);
@@ -372,6 +490,10 @@ button {
   border-bottom: 3px solid #fff176;
 }
 
+/* =========================================
+   PÁGINA
+========================================= */
+
 .page-background {
   flex: 1;
   min-height: 400px;
@@ -430,6 +552,10 @@ button {
   color: var(--accent);
 }
 
+/* =========================================
+   BARRA DE STATUS
+========================================= */
+
 .statusbar {
   min-height: 39px;
   padding: 0 20px;
@@ -453,6 +579,10 @@ button {
   color: var(--text);
 }
 
+/* =========================================
+   NOTIFICAÇÕES
+========================================= */
+
 .toast {
   position: fixed;
   left: 50%;
@@ -466,7 +596,9 @@ button {
   opacity: 0;
   pointer-events: none;
   transition: 0.2s;
-  z-index: 10;
+  z-index: 200;
+  max-width: calc(100vw - 30px);
+  text-align: center;
 }
 
 .toast.show {
@@ -474,7 +606,9 @@ button {
   transform: translate(-50%, 0);
 }
 
-/* Tema escuro */
+/* =========================================
+   TEMA ESCURO
+========================================= */
 
 body.dark {
   color-scheme: dark;
@@ -497,7 +631,9 @@ body.dark .editor blockquote {
   color: #c0c7d4;
 }
 
-/* Responsividade */
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
 
 @media (max-width: 900px) {
   .sidebar {
@@ -511,16 +647,16 @@ body.dark .editor blockquote {
   .document-header {
     flex-wrap: wrap;
   }
-
-  .document-title {
-    width: 100%;
-  }
 }
 
 @media (max-width: 650px) {
   .topbar {
     padding: 0 13px;
     height: 60px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
   }
 
   .workspace {
@@ -531,12 +667,40 @@ body.dark .editor blockquote {
     display: none;
   }
 
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+  }
+
+  .brand-subtitle {
+    font-size: 10px;
+  }
+
+  .save-status {
+    display: none;
+  }
+
+  .file-menu-button {
+    padding: 0 9px;
+    gap: 6px;
+  }
+
+  .file-menu {
+    right: -48px;
+    width: min(265px, calc(100vw - 20px));
+  }
+
   .document-header {
+    min-height: 60px;
     padding: 12px;
   }
 
-  .document-actions {
-    justify-content: flex-start;
+  .document-title {
+    font-size: 18px;
   }
 
   .toolbar {
@@ -571,11 +735,11 @@ body.dark .editor blockquote {
   .statusbar-right {
     display: none;
   }
-
-  .save-status {
-    display: none;
-  }
 }
+
+/* =========================================
+   IMPRESSÃO
+========================================= */
 
 @media print {
   @page {
