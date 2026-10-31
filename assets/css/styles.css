@@ -18,6 +18,15 @@
   --toolbar-height: 54px;
   --shadow: 0 2px 12px rgba(20, 30, 50, 0.06);
   --menu-shadow: 0 10px 35px rgba(20, 30, 50, 0.14);
+
+  /* Paleta independente da área de edição */
+  --editor-canvas: #f5f6f8;
+  --editor-paper: #ffffff;
+  --editor-text: #252a34;
+  --editor-muted: #747b89;
+  --editor-quote: #f0f2f5;
+  --editor-link: #5367e8;
+  --editor-shadow: 0 2px 12px rgba(20, 30, 50, 0.06);
 }
 
 /* =========================================
@@ -554,7 +563,7 @@ button {
   padding: 40px 24px;
   overflow-y: auto;
   overflow-x: hidden;
-  background: var(--background);
+  background: var(--editor-canvas);
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
@@ -570,9 +579,9 @@ button {
   height: auto;
   margin: 0 auto;
   padding: 70px 80px;
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow);
+  background: var(--editor-paper);
+  color: var(--editor-text);
+  box-shadow: var(--editor-shadow);
   outline: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -601,9 +610,9 @@ button {
 .editor blockquote {
   margin: 20px 0;
   padding: 10px 20px;
-  border-left: 3px solid var(--accent);
-  background: var(--surface-secondary);
-  color: var(--text-secondary);
+  border-left: 3px solid var(--editor-link);
+  background: var(--editor-quote);
+  color: var(--editor-muted);
 }
 
 .editor ul,
@@ -612,7 +621,7 @@ button {
 }
 
 .editor a {
-  color: var(--accent);
+  color: var(--editor-link);
 }
 
 /* =========================================
@@ -689,13 +698,25 @@ body.dark {
   --shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
 }
 
-body.dark .editor {
-  color: #e8ebf1;
+/* Tema escuro exclusivo do papel e da área ao redor do documento */
+.editor-area.editor-dark {
+  --editor-canvas: #171a21;
+  --editor-paper: #20242d;
+  --editor-text: #e8ebf1;
+  --editor-muted: #c0c7d4;
+  --editor-quote: #2a303b;
+  --editor-link: #a5b0ff;
+  --editor-shadow: 0 2px 14px rgba(0, 0, 0, 0.22);
 }
 
-body.dark .editor blockquote {
-  color: #c0c7d4;
+.editor-theme-button {
+  flex: 0 0 auto;
 }
+
+.document-header .document-title {
+  flex: 1 1 auto;
+}
+
 
 /* =========================================
    RESPONSIVIDADE
@@ -774,6 +795,12 @@ body.dark .editor blockquote {
 
   .document-title {
     font-size: 18px;
+    min-width: 0;
+  }
+
+  .editor-theme-button {
+    width: 34px;
+    height: 34px;
   }
 
   .toolbar {
