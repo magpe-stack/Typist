@@ -1,4 +1,9 @@
 
+/* =========================================
+   TYPIST — EDITOR DE TEXTO
+   Folha de estilos principal
+========================================= */
+
 :root {
   color-scheme: light;
   --background: #f5f6f8;
@@ -15,14 +20,27 @@
   --menu-shadow: 0 10px 35px rgba(20, 30, 50, 0.14);
 }
 
+/* =========================================
+   RESET E CONFIGURAÇÕES GERAIS
+========================================= */
+
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+  overflow: hidden;
+}
+
+body {
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 0;
+  height: 100vh;
+  height: 100dvh;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--background);
   color: var(--text);
@@ -38,10 +56,18 @@ button {
   cursor: pointer;
 }
 
+/* =========================================
+   ESTRUTURA PRINCIPAL
+========================================= */
+
 .app-shell {
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* =========================================
@@ -50,6 +76,7 @@ button {
 
 .topbar {
   height: 68px;
+  flex: 0 0 68px;
   padding: 0 26px;
   display: flex;
   align-items: center;
@@ -57,7 +84,7 @@ button {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: relative;
-  z-index: 20;
+  z-index: 50;
 }
 
 .brand {
@@ -269,13 +296,15 @@ button {
 }
 
 /* =========================================
-   ÁREA PRINCIPAL
+   ÁREA DE TRABALHO
 ========================================= */
 
 .workspace {
   display: flex;
-  flex: 1;
-  min-height: calc(100vh - 68px);
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
 }
 
 /* =========================================
@@ -284,11 +313,15 @@ button {
 
 .sidebar {
   width: var(--sidebar-width);
-  flex-shrink: 0;
+  flex: 0 0 var(--sidebar-width);
+  min-height: 0;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 .sidebar-heading {
@@ -300,11 +333,13 @@ button {
   font-size: 10px;
   font-weight: 750;
   letter-spacing: 1px;
+  flex-shrink: 0;
 }
 
 .document-list {
   padding: 4px 10px;
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -349,6 +384,7 @@ button {
 .sidebar-footer {
   padding: 17px;
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .storage-label {
@@ -364,18 +400,26 @@ button {
 }
 
 /* =========================================
-   EDITOR
+   ÁREA DO EDITOR
 ========================================= */
 
 .editor-area {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+  min-height: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
+
+/* =========================================
+   CABEÇALHO DO DOCUMENTO
+========================================= */
 
 .document-header {
   min-height: 76px;
+  flex: 0 0 auto;
   padding: 13px 26px;
   display: flex;
   align-items: center;
@@ -383,6 +427,8 @@ button {
   gap: 15px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
 }
 
 .document-title {
@@ -406,6 +452,7 @@ button {
 
 .toolbar {
   min-height: var(--toolbar-height);
+  flex: 0 0 auto;
   padding: 8px 17px;
   display: flex;
   align-items: center;
@@ -413,6 +460,8 @@ button {
   gap: 5px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
 }
 
 .toolbar-select {
@@ -439,6 +488,7 @@ button {
   height: 23px;
   background: var(--border);
   margin: 0 5px;
+  flex-shrink: 0;
 }
 
 .tool-button {
@@ -491,20 +541,33 @@ button {
 }
 
 /* =========================================
-   PÁGINA
+   ÁREA DE ROLAGEM DO DOCUMENTO
+
+   Somente esta região possui rolagem
+   vertical no editor.
 ========================================= */
 
 .page-background {
-  flex: 1;
-  min-height: 400px;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
   padding: 40px 24px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: var(--background);
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* =========================================
+   FOLHA DO DOCUMENTO
+========================================= */
 
 .editor {
   width: min(100%, 850px);
   min-height: 950px;
+  height: auto;
   margin: 0 auto;
   padding: 70px 80px;
   background: var(--surface);
@@ -558,6 +621,7 @@ button {
 
 .statusbar {
   min-height: 39px;
+  flex: 0 0 auto;
   padding: 0 20px;
   display: flex;
   align-items: center;
@@ -567,6 +631,8 @@ button {
   border-top: 1px solid var(--border);
   color: var(--text-secondary);
   font-size: 10px;
+  position: relative;
+  z-index: 10;
 }
 
 .statistics {
@@ -638,6 +704,7 @@ body.dark .editor blockquote {
 @media (max-width: 900px) {
   .sidebar {
     width: 190px;
+    flex-basis: 190px;
   }
 
   .editor {
@@ -649,10 +716,15 @@ body.dark .editor blockquote {
   }
 }
 
+/* =========================================
+   CELULARES
+========================================= */
+
 @media (max-width: 650px) {
   .topbar {
     padding: 0 13px;
     height: 60px;
+    flex-basis: 60px;
   }
 
   .topbar-actions {
@@ -660,7 +732,8 @@ body.dark .editor blockquote {
   }
 
   .workspace {
-    min-height: calc(100vh - 60px);
+    min-height: 0;
+    height: auto;
   }
 
   .sidebar {
@@ -713,7 +786,10 @@ body.dark .editor blockquote {
   }
 
   .page-background {
+    min-height: 0;
     padding: 12px 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .editor {
@@ -746,15 +822,18 @@ body.dark .editor blockquote {
     margin: 2cm;
   }
 
+  html,
   body,
   .app-shell,
   .workspace,
   .editor-area,
   .page-background {
-    display: block;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
     background: white !important;
-    min-height: 0;
-    padding: 0;
   }
 
   .topbar,
@@ -766,13 +845,22 @@ body.dark .editor blockquote {
     display: none !important;
   }
 
+  .editor-area {
+    width: 100% !important;
+  }
+
+  .page-background {
+    padding: 0 !important;
+  }
+
   .editor {
-    width: 100%;
-    min-height: 0;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
     color: black !important;
-    overflow: visible;
+    overflow: visible !important;
   }
 }
