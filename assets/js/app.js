@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* =========================================
@@ -9,6 +8,7 @@
 const STORAGE_KEY = "typist.documents.v1";
 const ACTIVE_KEY = "typist.active.v1";
 const THEME_KEY = "typist.theme.v1";
+const EDITOR_THEME_KEY = "typist.editorTheme.v1";
 
 const editor = document.getElementById("editor");
 const documentTitle = document.getElementById("documentTitle");
@@ -547,7 +547,7 @@ function downloadFile(filename, content, mimeType) {
   link.download = filename;
 
   document.body.appendChild(link);
-  link.click();
+     link.click();
   link.remove();
 
   setTimeout(() => URL.revokeObjectURL(url), 1500);
@@ -822,8 +822,7 @@ function createRunProperties(style) {
       `<w:rFonts w:ascii="${family}" w:hAnsi="${family}"/>`
     );
   }
-
-  const fontSize = fontSizeToHalfPoints(style.fontSize);
+     const fontSize = fontSizeToHalfPoints(style.fontSize);
 
   if (fontSize) {
     properties.push(
@@ -1098,6 +1097,8 @@ function createStylesXML() {
    <w:sz w:val="36"/>
    <w:color w:val="252A34"/>
   </w:rPr>
+ </w:style>
+   </w:rPr>
  </w:style>
 
  <w:style w:type="paragraph" w:styleId="Heading2">
@@ -1532,6 +1533,45 @@ document.getElementById("themeBtn").addEventListener("click", () => {
 });
 
 /* =========================================
+   TEMA INDEPENDENTE DA ÁREA DE EDIÇÃO
+========================================= */
+
+function applyEditorTheme(theme) {
+  const dark = theme === "dark";
+  const editorArea = document.querySelector(".editor-area");
+  const editorThemeBtn = document.getElementById("editorThemeBtn");
+
+  if (!editorArea || !editorThemeBtn) return;
+
+  editorArea.classList.toggle("editor-dark", dark);
+  editorThemeBtn.setAttribute("aria-pressed", String(dark));
+  editorThemeBtn.title = dark
+    ? "Ativar tema claro da área de edição"
+    : "Ativar tema escuro da área de edição";
+  editorThemeBtn.setAttribute("aria-label", editorThemeBtn.title);
+
+  editorThemeBtn.innerHTML = dark
+    ? `<svg viewBox="0 0 24 24" aria-hidden="true">
+         <circle cx="12" cy="12" r="4"/>
+         <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+       </svg>`
+    : `<svg viewBox="0 0 24 24" aria-hidden="true">
+         <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>
+       </svg>`;
+
+  localStorage.setItem(EDITOR_THEME_KEY, dark ? "dark" : "light");
+}
+
+document.getElementById("editorThemeBtn").addEventListener("click", () => {
+  const editorArea = document.querySelector(".editor-area");
+  const nextTheme = editorArea.classList.contains("editor-dark")
+    ? "light"
+    : "dark";
+
+  applyEditorTheme(nextTheme);
+});
+
+/* =========================================
    SERVICE WORKER
 ========================================= */
 
@@ -1549,5 +1589,6 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
 ========================================= */
 
 applyTheme(localStorage.getItem(THEME_KEY) || "light");
+applyEditorTheme(localStorage.getItem(EDITOR_THEME_KEY) || "light");
 
 loadDocuments();
